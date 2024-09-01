@@ -1,0 +1,176 @@
+{
+    "Introduction": {
+      "Conformance": [
+        "Conforming Document: The relevant normative `MUST` statements in Sections 4. Basic Concepts, 5. Advanced Concepts, and 6. Syntaxes of this document MUST be enforced.",
+        "A conforming document MUST be either a verifiable credential with a media type of application/vc or a verifiable presentation with a media type of application/vp.",
+        "A conforming document MUST be secured by at least one securing mechanism as described in Section 4.12 Securing Mechanisms.",
+        "A conforming issuer implementation MUST include all required properties in the conforming documents it produces.",
+        "A conforming issuer implementation MUST secure the conforming documents it produces using a securing mechanism described in Section 4.12 Securing Mechanisms.",
+        "A conforming verifier implementation MUST perform verification on a conforming document as described in Section 4.12 Securing Mechanisms.",
+        "A conforming verifier implementation MUST check that each required property satisfies the normative requirements for that property.",
+        "A conforming verifier implementation MUST produce errors when non-conforming documents are detected."
+      ]
+    },
+    "Basic Concepts": {
+      "Contexts": [
+        "Verifiable credentials and verifiable presentations MUST include a @context property.",
+        "Application developers MUST understand every JSON-LD context used by their application",
+        "The value of the @context property MUST be an ordered set where the first item is a URL with the value https://www.w3.org/ns/credentials/v2.",
+        "Subsequent items in the ordered set MUST be composed of any combination of URLs and objects, where each is processable as a JSON-LD Context."
+      ],
+      "Identifiers": [
+        "If present, id property's value MUST be a single URL."
+      ],
+      "Types": [
+        "Verifiable credentials and verifiable presentations MUST contain a type property with an associated value.",
+        "The value of the type property MUST be one or more terms and absolute URL strings.",
+        "Concerning this specification, the following table lists the objects that MUST have a type specified.",
+        "Verifiable credential object: `VerifiableCredential` and, optionally, a more specific verifiable credential type.",
+        "Verifiable presentation object: `VerifiablePresentation` and, optionally, a more specific verifiable presentation type.",
+        "credentialStatus object: A valid credential status type.",
+        "termsOfUse object: A valid terms of use type.",
+        "evidence object: A valid evidence type",
+        "refreshService object: A valid refreshService type. ",
+        "credentialSchema object: A valid credentialSchema type. "
+      ],
+      "Names and Descriptions": [
+        "If present, the value of the name property MUST be a string or a language value object as described in 11.1 Language and Base Direction.",
+        "If present, the value of the description property MUST be a string or a language value object as described in 11.1 Language and Base Direction."
+      ],
+      "Issuer": [
+        "A verifiable credential MUST have an issuer property.",
+        "The value of the issuer property MUST be either a URL or an object containing an id property whose value is a URL"
+      ],
+      "Credential Subject": [
+        "A verifiable credential MUST contain a credentialSubject property.",
+        "The value of the credentialSubject property is a set of objects where each object MUST be the subject of one or more claims.",
+        "Each claims MUST be serialized inside the credentialSubject property."
+      ],
+      "Validity Period": [
+        "If present, the value of the validFrom property MUST be a [XMLSCHEMA11-2] dateTimeStamp string value.",
+        "If a validUntil value also exists, the validFrom value MUST express a point in time that is temporally the same or earlier than the point in time expressed by the validUntil value.",
+        "If present, the value of the validUntil property MUST be a [XMLSCHEMA11-2] dateTimeStamp string value",
+        "If a validFrom value also exists, the validUntil value MUST express a point in time that is temporally the same or later than the point in time expressed by the validFrom value."
+      ],
+      "Status": [
+        "$.credentialStatus.id: If present, the normative guidance in Section 4.4 Identifiers MUST be followed.",
+        "$.credentialStatus.type: The related normative guidance in Section 4.5 Types MUST be followed.",
+        "Credential status specifications MUST NOT enable tracking of individuals."
+      ],
+      "Data Schemas": [
+        "The value of the credentialSchema property MUST be one or more data schemas.",
+        "Each credentialSchema MUST specify its type.",
+        "Each credentialSchema MUST specify an id property that MUST be a URL identifying the schema file."
+      ],
+      "Verifiable Presentations": [
+        "$.id: If present, the normative guidance in Section 4.4 Identifiers MUST be followed.",
+        "The type property MUST be present.",
+        "One value of this property MUST be VerifiablePresentation.",
+        "The related normative guidance in Section 4.5 Types MUST be followed.",
+        "$.verifiableCredential: The value MUST be one or more verifiable credential and/or enveloped verifiable credential objects.",
+        "$.verifiableCredential: The values MUST NOT be non-object values such as numbers, strings, or URLs.",
+        "$.verifiableCredential: These objects MUST express information that is secured using a securing mechanism.",
+        "$.holder: If present, the value MUST be either a URL or an object containing an id property."
+      ]
+    },
+    "Advanced Concepts": {
+      "Enveloped Verifiable Credentials": [
+        "The @context property of the object MUST be present and include a context, such as the base context for this specification, that defines at least the id, type, and EnvelopedVerifiableCredential terms as defined by the base context provided by this specification.",
+        "The id value of the object MUST be a data: URL [RFC2397] that expresses a secured verifiable credential using an enveloping security scheme.",
+        "The type value of the object MUST be EnvelopedVerifiableCredential."
+      ],
+      "Enveloped Verifiable Presentation": [
+        "The @context property of the object MUST be present and include a context, such as the base context for this specification, that defines at least the id, type, and EnvelopedVerifiablePresentation terms as defined by the base context provided by this specification.",
+        "The id value of the object MUST be a data: URL [RFC2397] that expresses a secured verifiable presentation using an enveloping securing mechanism.",
+        "The type value of the object MUST be EnvelopedVerifiablePresentation."
+      ],
+      "Presentations Including Holder Claims": [
+        "A verifiable presentation that includes a self-asserted verifiable credential, which is secured only using the same mechanism as the verifiable presentation, MUST include a holder property.",
+        "When a self-asserted verifiable credential is secured using the same mechanism as the verifiable presentation, the value of the issuer property of the verifiable credential MUST be identical to the holder property of the verifiable presentation."
+      ],
+      "Semantic Interoperability": [
+        "New terms MUST define a new URL for each term.",
+        "Human-readable documentation MUST be published, describing the semantics of and the constraints on the use of each term.",
+        "A machine-readable description (that is, a JSON-LD Context document) MUST be published at the URL specified in the @context property for the vocabulary.",
+        "This context MUST map each term to its corresponding URL",
+        "If a conforming document does not use JSON-LD Contexts that define all terms used, it MUST include the https://www.w3.org/ns/credentials/undefined-terms/v2 as the last value in the @context property."
+      ],
+      "Integrity of Related Resources": [
+        "The value of the relatedResource property MUST be one or more objects of the following form.",
+        "id: The value MUST conform to the format defined in Section 4.4 Identifiers.",
+        "id: The value MUST be unique among the list of related resource objects.",
+        "Each object associated with relatedResource MUST contain at least a digestSRI or a digestMultibase value.",
+        "If that resource's content is vital to the validity of that document, the specification MUST produce a validation error unless the resource matches the expected media type and cryptographic digest."
+      ],
+      "Refreshing": [
+        "The value of the refreshService property MUST be one or more refresh services.",
+        "Each refreshService value MUST specify its type."
+      ],
+      "Terms of Use": [
+        "The value of the termsOfUse property MUST specify one or more terms of use policies under which the creator issued the credential or presentation.",
+        "Each termsOfUse value MUST specify its type."
+      ],
+      "Evidence": [
+        "If present, the value of the evidence property MUST be either a single object or a set of one or more objects.",
+        "$.evidence.id: If present, the normative guidance in Section 4.4 Identifiers MUST be followed.",
+        "$.evidence.type: The type property is REQUIRED. The related normative guidance in Section 4.5 Types MUST be followed."
+      ],
+      "Zero-Knowledge Proofs": [
+        "Specification authors that create securing mechanisms MUST NOT design them in such a way that they leak information that would enable the verifier to correlate a holder across multiple verifiable presentations to different verifiers."
+      ],
+      "Representing Time": [
+        "Time values that are incorrectly serialized without an offset MUST be interpreted as UTC."
+      ],
+      "Reserved Extension Points": [
+        "In order to avoid collisions regarding how the following properties are used, implementations MUST specify a type property in the value associated with the reserved property.",
+        "confidenceMethod: The associated vocabulary URL MUST be https://www.w3.org/2018/credentials#confidenceMethod.",
+        "renderMethod: The associated vocabulary URL MUST be https://www.w3.org/2018/credentials#renderMethod."
+      ],
+      "Ecosystem Compatibility": [
+        "MUST identify whether the transformation to this data model is one-way-only or round-trippable.",
+        "MUST preserve the @context values when performing round-trippable transformation.",
+        "MUST result in a conforming document when transforming to the data model described by this specification.",
+        "MUST specify a registered media type for the input document."
+      ],
+      "Securing Mechanism Specifications": [
+        "Securing mechanism specifications MUST document normative algorithms that provide content integrity protection for conforming documents.",
+        "Securing mechanism specifications MUST provide a verification algorithm that returns the information in the conforming document that has been secured, in isolation, without including any securing mechanism information, such as proof or JOSE/COSE header parameters and signatures.",
+        "A verification algorithm MUST provide an interface that receives a media type (string inputMediaType) and input data (byte sequence or map inputData).",
+        "A securing mechanism specification that creates a new type of embedded proof MUST specify a property that relates the verifiable credential or verifiable presentation to a proof graph.",
+        "Embedded Proof: The securing mechanism MUST define all terms used by the proof graph.",
+        "Embedded Proof: The securing mechanism MUST secure all graphs in the verifiable credential or the verifiable presentation, except for any proof graphs securing the verifiable credential or the verifiable presentation itself."
+      ]
+    },
+    "Syntaxes": {
+      "Restrictions on JSON-LD": [
+        "JSON-LD compacted document form MUST be utilized for all representations of the data model using the application/vc or application/vp media type."
+      ]
+    },
+    "Algorithms": {
+      "Verification": [
+        "This section contains an algorithm that conforming verifier implementations MUST run when verifying a verifiable credential or a verifiable presentation.",
+        "The verifyProof function MUST implement the interface described in 5.13 Securing Mechanism Specifications."
+      ],
+      "Problem Details": [
+        "The type property MUST be present and its value MUST be a URL identifying the type of problem.",
+        "code: If present, its value MUST be an integer that identifies the type of the problem.",
+        "The title property MUST be present and its value SHOULD provide a short but specific human-readable string for the problem.",
+        "The detail property MUST be present and its value SHOULD provide a longer human-readable string for the problem."
+      ]
+    },
+    "Internationalization Considerations": {
+      "Language and Base Direction": [
+        "When the language value object is used in place of a string value, the object MUST contain a @value property whose value is a string.",
+        "The language value object MUST NOT include any other keys beyond @value, @language, and @direction."
+      ]
+    },
+    "Contexts, Vocabularies, Types, and Credential Schemas": {
+      "Base Context": [
+        "Implementations MUST treat the base context value, located at https://www.w3.org/ns/credentials/v2, as already retrieved.",
+        "Implementations that apply the base context above, as well as other contexts and values in any @context property, during operations such as JSON-LD Expansion or transformation to RDF, are expected to do so without experiencing any errors. If such operations are performed and result in an error, the verifiable credential or verifiable presentation MUST result in a verification failure."
+      ],
+      "Vocabularies": [
+        "Implementations that depend on RDF vocabulary processing MUST ensure that the following vocabulary URLs used in the base context ultimately resolve to the following files when loading the JSON-LD serializations, which are normative."
+      ]
+    }
+  }

@@ -1,0 +1,16 @@
+{
+  "@context": {
+    "vocab": "https://www.w3.org/ns/credentials/undefined-terms/v2#",
+    {{ for type in types }}
+    "{{ type }}": {
+      "@id": "vocab:{{ type }}",
+      "@context": {
+        "@protected": true,
+        {{ for property in types[type]["properties"] }}
+        "{{ property }}": "vocab:{{ property }}"
+        {{ endfor }}
+      }
+    }
+    {{ endfor }}
+  }
+}
